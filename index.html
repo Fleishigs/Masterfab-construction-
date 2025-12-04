@@ -28,26 +28,42 @@
             overflow: hidden;
             border-right: 3px solid #FDB713;
             white-space: nowrap;
-            margin: 0 auto;
             letter-spacing: 0.05em;
+            width: 0;
+            display: block;
+            max-width: 100%;
             animation: 
                 typing-1 2s steps(22, end) 0.5s forwards,
-                blink-caret 0.75s step-end infinite;
-            width: 0;
+                blink-caret 0.75s step-end 2 0.5s,
+                hide-cursor-1 0.01s 2.5s forwards;
+        }
+        
+        @keyframes hide-cursor-1 {
+            to { border-right-color: transparent; }
         }
         
         .typewriter-line-2 {
             overflow: hidden;
-            border-right: 3px solid #FDB713;
+            border-right: 3px solid transparent;
             white-space: nowrap;
-            margin: 0 auto;
             letter-spacing: 0.05em;
-            animation: 
-                typing-2 2s steps(26, end) 2.8s forwards,
-                blink-caret-2 0.75s step-end infinite 2.8s;
             width: 0;
             opacity: 0;
-            animation-fill-mode: forwards;
+            display: block;
+            max-width: 100%;
+            animation: 
+                show-cursor-2 0.01s 2.8s forwards,
+                typing-2 2s steps(26, end) 2.8s forwards,
+                blink-caret-2 0.75s step-end 3 2.8s,
+                hide-cursor-2 0.01s 5.2s forwards;
+        }
+        
+        @keyframes show-cursor-2 {
+            to { border-right-color: #FDB713; opacity: 1; }
+        }
+        
+        @keyframes hide-cursor-2 {
+            to { border-right-color: transparent; }
         }
         
         @keyframes typing-1 {
@@ -247,18 +263,18 @@
     <section id="hero" class="hero-pattern pt-32 pb-24 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="max-w-4xl">
-                <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6">
                     <div class="typewriter-line-1">We Handle Your Build.</div>
                     <div class="typewriter-line-2 text-yellow-500">You Handle Your Business.</div>
                 </h1>
-                <p class="text-xl md:text-2xl text-gray-400 mb-10 leading-relaxed fade-in-after-typing">
+                <p class="text-lg sm:text-xl md:text-2xl text-gray-400 mb-10 leading-relaxed fade-in-after-typing">
                     Smart, fast, sustainable prefab construction. We handle the complexity so your project moves forward seamlessly.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 fade-delay-1">
-                    <a href="#contact" class="btn-primary text-black px-8 py-4 rounded-lg font-bold text-lg text-center">
+                    <a href="#contact" class="btn-primary text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg text-center">
                         Start Your Project
                     </a>
-                    <a href="#projects" class="btn-secondary px-8 py-4 rounded-lg font-bold text-lg text-center">
+                    <a href="#projects" class="btn-secondary px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg text-center">
                         View Portfolio
                     </a>
                 </div>
@@ -612,7 +628,7 @@
                 <div>
                     <h4 class="font-semibold mb-4 text-yellow-500">Contact Info</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li>info@masterfab.com</li>
+                        <li><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="89e0e7efe6c9e4e8fafdecfbefe8eba7eae6e4">[email&#160;protected]</a></li>
                         <li>1-800-MASTERFAB</li>
                         <li>123 Construction Way</li>
                         <li>Building City, ST 12345</li>
@@ -626,13 +642,16 @@
     </footer>
 
     <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
 
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -707,13 +726,4 @@
                 }
             } catch (error) {
                 formMessage.textContent = '✗ Oops! There was a problem. Please try again.';
-                formMessage.className = 'mt-4 text-red-400 font-semibold text-center';
-            } finally {
-                formButton.disabled = false;
-                formButton.textContent = 'Send Message';
-            }
-        });
-    </script>
-
-</body>
-</html>
+                formMessage.className = 
