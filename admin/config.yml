@@ -1,0 +1,62 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "projects"
+    label: "Projects"
+    folder: "content/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Category", name: "category", widget: "string", hint: "e.g., Residential, Commercial, Industrial" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Order", name: "order", widget: "number", default: 1, hint: "Display order (lower numbers show first)" }
+      - { label: "Publish", name: "published", widget: "boolean", default: true }
+
+  - name: "stats"
+    label: "Statistics"
+    folder: "content/stats"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Number", name: "number", widget: "string", hint: "e.g., 100%, 40%, 30%" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Order", name: "order", widget: "number", default: 1 }
+
+  - name: "site_settings"
+    label: "Site Settings"
+    files:
+      - label: "Hero Section"
+        name: "hero"
+        file: "content/settings/hero.json"
+        fields:
+          - { label: "Line 1", name: "line1", widget: "string" }
+          - { label: "Line 2", name: "line2", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Button 1 Text", name: "button1_text", widget: "string" }
+          - { label: "Button 2 Text", name: "button2_text", widget: "string" }
+      
+      - label: "About Section"
+        name: "about"
+        file: "content/settings/about.json"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description Paragraph 1", name: "description1", widget: "text" }
+          - { label: "Description Paragraph 2", name: "description2", widget: "text" }
+          - { label: "Benefits", name: "benefits", widget: "list" }
+      
+      - label: "Contact Info"
+        name: "contact"
+        file: "content/settings/contact.json"
+        fields:
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "Address Line 1", name: "address1", widget: "string" }
+          - { label: "Address Line 2", name: "address2", widget: "string" }
