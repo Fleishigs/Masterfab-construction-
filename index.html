@@ -447,10 +447,13 @@
             </div>
             
             <div class="glass rounded-3xl p-8 md:p-12">
-                <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
-                    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-                    <input type="hidden" name="subject" value="New Contact Form Submission from Master Fab Website">
-                    <input type="hidden" name="from_name" value="Master Fab Website">
+                <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="space-y-6">
+                    <!-- Netlify form detection -->
+                    <input type="hidden" name="form-name" value="contact">
+                    <!-- Honeypot field for spam protection -->
+                    <p class="hidden">
+                        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                    </p>
                     
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
@@ -466,10 +469,9 @@
                     <div>
                         <textarea name="message" required rows="5" placeholder="Tell us about your project" class="w-full px-6 py-4 rounded-xl bg-white/5 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent resize-none"></textarea>
                     </div>
-                    <button type="submit" id="form-button" class="w-full btn-primary text-black px-8 py-4 rounded-xl font-bold text-lg">
+                    <button type="submit" class="w-full btn-primary text-black px-8 py-4 rounded-xl font-bold text-lg">
                         Send Message
                     </button>
-                    <div id="form-message" class="text-center"></div>
                 </form>
             </div>
         </div>
@@ -509,7 +511,7 @@
                 <div>
                     <h4 class="font-semibold mb-4 text-yellow-500">Contact Info</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li>info@masterfab.com</li>
+                        <li><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cea7a0a8a18ea3afbdbaabbca8aface0ada1a3">[email&#160;protected]</a></li>
                         <li>1-800-MASTERFAB</li>
                         <li>123 Construction Way</li>
                         <li>Building City, ST 12345</li>
@@ -522,7 +524,7 @@
         </div>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Mobile menu toggle - SIMPLE INLINE FUNCTION
         function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
@@ -605,48 +607,6 @@
             });
         });
         
-        // Contact form
-        const form = document.getElementById('contact-form');
-        const formButton = document.getElementById('form-button');
-        const formMessage = document.getElementById('form-message');
-        
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            formButton.disabled = true;
-            formButton.textContent = 'Sending...';
-            formMessage.textContent = '';
-            
-            const formData = new FormData(form);
-            const object = Object.fromEntries(formData);
-            const json = JSON.stringify(object);
-            
-            try {
-                const response = await fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: json
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    formMessage.textContent = '✓ Thanks! Your message has been sent successfully.';
-                    formMessage.className = 'mt-4 text-green-400 font-semibold text-center';
-                    form.reset();
-                } else {
-                    throw new Error('Form submission failed');
-                }
-            } catch (error) {
-                formMessage.textContent = '✗ Oops! There was a problem. Please try again.';
-                formMessage.className = 'mt-4 text-red-400 font-semibold text-center';
-            } finally {
-                formButton.disabled = false;
-                formButton.textContent = 'Send Message';
-            }
         });
     </script>
 
